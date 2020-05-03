@@ -1,0 +1,43 @@
+<ng-container *ngIf="additionalInfo">
+  <div class="image__info-container">
+    <div class="image__info-item">
+      <colored-avatar [avatar]="additionalInfo.user.avatar"></colored-avatar>
+      <span>{{additionalInfo.user.username}}</span>
+    </div>
+    <div class="image__info-item">
+      <colored-icon [materialIconName]="'query_builder'"></colored-icon>
+      <span>{{additionalInfo.createdAt | date: 'MMM dd, yyyy'}}</span>
+    </div>
+    <div class="image__info-item">
+      <span>Access Level: </span>
+      <ng-template [ngIf]="additionalInfo.accessLevel === 'public'" [ngIfElse]="privateTemplate">
+            <colored-icon [materialIconName]="'visibility'"></colored-icon>
+      </ng-template>
+      <ng-template #privateTemplate>
+        <colored-icon [materialIconName]="'lock'"></colored-icon>
+      </ng-template>
+    </div>
+
+    <div class="image__info-item">
+      <span>Genre: </span>
+      <a [routerLink]="'../upload'">{{additionalInfo.genre.title}}</a>
+    </div>
+    <div class="image__info-item">
+      <span>Album: </span>
+      <ng-template [ngIf]="additionalInfo.album" [ngIfElse]="noContent"></ng-template>
+      <a [routerLink]="'../upload'">{{additionalInfo.album ? additionalInfo.album.name : 'Album'}}</a>
+    </div>
+    <div class="image__info-item _flex-start">
+      <span>Tags: </span>
+      <ng-template [ngIf]="additionalInfo.tags.length > 0">
+        <div class="image__tags">
+          <span class="image__tag" *ngFor="let tag of additionalInfo.tags">{{tag.title}}</span>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noContent let-message="message">
+  <span>{{message}}</span>
+</ng-template>

@@ -1,0 +1,16 @@
+.app {
+  &__layout {
+    display: grid;
+    height: 100vh;
+    grid-template-areas: 'header' 'main';
+    grid-template-rows: auto 1fr;
+  }
+
+  &__header {
+    grid-area: header;
+  }
+
+  &__main {
+    grid-area: main;
+  }
+}

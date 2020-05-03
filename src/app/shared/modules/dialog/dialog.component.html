@@ -1,0 +1,8 @@
+<div class="overlay" (click)="closeModal()">
+  <div class="modal" (click)="clickModal($event)">
+    <div class="modal__header">
+      <colored-icon (clickAction)="closeModal()" [materialIconName]="'clear'"></colored-icon>
+    </div>
+    <ng-template #contentInsertion></ng-template>
+  </div>
+</div>

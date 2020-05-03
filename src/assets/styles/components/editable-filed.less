@@ -1,0 +1,33 @@
+.editable-field {
+
+  textarea {
+    width: 100%;
+    resize: unset;
+    min-height: 10vh;
+  }
+
+  &._editable {
+    width: fit-content;
+    display: grid;
+    grid-template-areas: 'value pen';
+    align-items: center;
+    height: fit-content;
+
+    .editable-field__pen {
+      grid-area: pen;
+      font-size: 1em;
+      display: none;
+    }
+
+    .editable-field__value {
+      grid-area: value;
+    }
+
+    &:hover {
+
+      .editable-field__pen {
+        display: block;
+      }
+    }
+  }
+}

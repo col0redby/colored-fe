@@ -3,6 +3,10 @@
   "rules": {
     "array-type": false,
     "arrow-parens": false,
+    "variable-name": [
+      true,
+      "allow-leading-underscore"
+    ],
     "deprecation": {
       "severity": "warning"
     },
@@ -18,7 +22,7 @@
     "component-selector": [
       true,
       "element",
-      "app",
+      "colored",
       "kebab-case"
     ],
     "import-blacklist": [

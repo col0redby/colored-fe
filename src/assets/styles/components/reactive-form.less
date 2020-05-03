@@ -1,0 +1,26 @@
+.form {
+  display: grid;
+  grid-gap: 10px;
+  width: 30vw;
+
+  &__field {
+    display: grid;
+    grid-gap: 5px;
+    width: 100%;
+
+    &-errors {
+      color: red;
+    }
+
+    &-radio {
+      display: grid;
+      grid-gap: 5px;
+      grid-auto-flow: column;
+
+      &-item {
+        display: flex;
+        flex-direction: row;
+      }
+    }
+  }
+}

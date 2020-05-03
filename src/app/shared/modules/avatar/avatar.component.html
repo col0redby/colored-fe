@@ -1,0 +1,8 @@
+<div class="image__avatar">
+  <ng-template [ngIf]="avatar" [ngIfElse]="noAvatar">
+    <img [src]="avatar.xs">
+  </ng-template>
+  <ng-template #noAvatar>
+    <colored-icon [materialIconName]="'photo_camera'" [styleClass]="'photo-camera'"></colored-icon>
+  </ng-template>
+</div>

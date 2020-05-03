@@ -1,0 +1,28 @@
+<ng-container *ngIf="(photos$ | async) as photos">
+  <div class="profile">
+    <div class="photoThumbnail" *ngFor="let photo of photos, trackBy: trackByPhoto"  [routerLink]="getLink(photo.id)">
+      <colored-view-image [styleClass]="'photoThumbnail__img'" [imagePath]="photo.original"></colored-view-image>
+      <div class="overlay__image">
+        <p class="overlay__author">Никита Харитонов</p>
+        <div class="overlay__metrics">
+          <div class="overlay__metric">
+            <colored-icon [materialIconName]="'notes'" [styleClass]="'overlay__metric_icon'"></colored-icon>
+            <span>103</span>
+          </div>
+          <div class="overlay__metric">
+            <colored-icon [materialIconName]="'favorite'" [styleClass]="'overlay__metric_icon'"></colored-icon>
+            <span>103</span>
+          </div>
+          <div class="overlay__metric">
+            <colored-icon [materialIconName]="'visibility'" [styleClass]="'overlay__metric_icon'"></colored-icon>
+            <span>103</span>
+          </div>
+        </div>
+        <div class="overlay__title">
+          <p>{{photo.title}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+

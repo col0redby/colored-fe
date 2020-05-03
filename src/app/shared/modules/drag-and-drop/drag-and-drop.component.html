@@ -1,0 +1,9 @@
+<div class="dnd__wrapper" dragFile (fileDropped)="getFiles($event)">
+  <p class="dnd__caption">Select file or drag here</p>
+  <div class="div">
+    <label class="dnd__upload-file" for="input-file">
+      Select file
+    </label>
+    <input type="file" id="input-file" (change)="getFiles($event.target.files)" #uploadFile>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<ng-container *ngIf="mainInfo">
+  <div class="image__info-container">
+    <div class="image__info-item _flex" *ngIf="mainInfo.colors.length > 0">
+      <div *ngFor="let color of mainInfo.colors"
+           class="color"
+           [ngStyle]="{backgroundColor: color.color, width: color.pct + '%'}"
+      ></div>
+    </div>
+    <div class="image__info-item _title">
+      <colored-editable-field [value]="mainInfo.title"
+                              [type]="'string'"
+                              [styleClass]="'title'"
+                              (valueChange)="onEdit('title', $event)"
+      ></colored-editable-field>
+      <div class="user-actions">
+        <div class="flow-column">
+          <colored-icon [materialIconName]="'favorite'"></colored-icon>
+          <span>{{mainInfo.likes.count}}</span>
+        </div>
+        <div class="flow-column">
+          <colored-icon [materialIconName]="'remove_red_eye'"></colored-icon>
+          <span>{{mainInfo.comments.count}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="image__info-item _title">
+      <colored-editable-field [value]="mainInfo.description" [type]="'text'" (valueChange)="onEdit('description', $event)"></colored-editable-field>
+    </div>
+    <div class="image__info-item _title">
+      <button (click)="onDeletePhoto()">Delete photo</button>
+    </div>
+
+    <div class="image__info-item _title">
+      <colored-comments-block></colored-comments-block>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,35 @@
+<div class="editable-field" (click)="onChangeOldValue()" [ngClass]="{'_editable': !editable}">
+  <ng-container [ngSwitch]="type">
+
+    <ng-template [ngSwitchCase]="'string'">
+      <ng-container *ngIf="editable">
+        <input [value]="value" (blur)="onChange($event)" autofocus #stringInput>
+      </ng-container>
+
+      <ng-container *ngIf="!editable">
+        <div class="editable-field__value" [ngClass]="styleClass">
+          <span>{{value}}</span>
+        </div>
+        <div class="editable-field__pen">
+          <colored-icon [materialIconName]="'edit'"></colored-icon>
+        </div>
+      </ng-container>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="'text'">
+      <ng-template [ngIf]="editable">
+        <textarea [value]="value" (blur)="onChange($event)" autofocus #textInput></textarea>
+      </ng-template>
+
+      <ng-container *ngIf="!editable">
+        <div class="editable-field__value">
+          <span>{{value}}</span>
+        </div>
+        <div class="editable-field__pen">
+          <colored-icon [materialIconName]="'edit'"></colored-icon>
+        </div>
+      </ng-container>
+    </ng-template>
+
+  </ng-container>
+</div>

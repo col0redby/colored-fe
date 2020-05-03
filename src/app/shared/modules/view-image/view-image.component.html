@@ -1,0 +1,7 @@
+<ng-template [ngIf]="imagePath" [ngIfElse]="loading">
+  <img [ngClass]="styleClass" [alt]="" [src]="imagePath">
+</ng-template>
+
+<ng-template #loading>
+  <colored-load-spinner></colored-load-spinner>
+</ng-template>

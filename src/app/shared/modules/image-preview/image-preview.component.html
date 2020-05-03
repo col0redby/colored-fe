@@ -1,0 +1,17 @@
+<ng-container *ngIf="(image$ | async) as image">
+  <div class="image__preview">
+    <div class="image__container">
+      <div class="image__wrapper">
+        <colored-icon [materialIconName]="'clear'" [styleClass]="'image__close'" (clickAction)="close()"></colored-icon>
+        <colored-icon [materialIconName]="'fullscreen'"
+                      [styleClass]="'image__icon-full-screen'">
+        </colored-icon>
+        <colored-view-image class="image__view" [imagePath]="image.original"></colored-view-image>
+      </div>
+    </div>
+    <colored-image-info [imageInfo$]="image$" (editImageInfo)="editImage($event)" (deletePhoto)="deletePhoto()"></colored-image-info>
+  </div>
+</ng-container>
+
+
+

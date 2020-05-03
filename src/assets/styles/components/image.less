@@ -1,0 +1,146 @@
+.image {
+  &__container {
+    background-color: @lightgrey;
+  }
+
+  &__view {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__wrapper {
+    height: 100%;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 1;
+  }
+
+  &__icon-full-screen {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 1;
+  }
+
+  &__preview {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: 33vh 67vh;
+  }
+
+  &__info {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(3, minmax(auto, 33.33%));
+
+    @media screen and (max-width: 900px) {
+      grid-auto-flow: row;
+      grid-template-columns: none;
+
+      .image__info-metadata {
+        grid-row-start: 3;
+      }
+    }
+
+    &-container {
+      display: grid;
+      grid-gap: 1em;
+      padding: 3em;
+    }
+
+    &-item {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: auto 1fr;
+      grid-gap: 0.5em;
+      align-items: center;
+      width: 100%;
+      min-height: 20px;
+
+      &._flex-start {
+        align-items: flex-start;
+      }
+
+      &._title {
+        grid-template-columns: 1fr auto;
+        justify-content: center;
+
+        .user-actions {
+          display: grid;
+          grid-auto-flow: column;
+          grid-gap: 1em
+        }
+      }
+
+      .flow-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      &._flex {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        height: 100%;
+
+        .color {
+          height: 100%;
+
+          &:first-child {
+            border-radius: @border-radius 0 0 @border-radius;
+          }
+
+          &:last-child {
+            border-radius: 0 @border-radius @border-radius 0;
+          }
+        }
+      }
+    }
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    .image__tag {
+      border: 2px solid @darkgrey;
+      border-radius: 4px;
+      padding: 4px 2px;
+      margin: 0 0.5em 0.5em 0;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__avatar {
+    border-radius: 50%;
+    background: @lightgrey;
+    height: 5em;
+    width: 5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .photo-camera {
+      color: #FFFFFF;
+      font-size: 2.5em;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+
+import {select, Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {filter} from 'rxjs/operators';
+
+import {ReactiveFormControl} from '../../shared/modules/reactive-form/models/reactive-form-controls.model';
+import * as fromStore from './store';
+import {ImageRequest} from './models/image-upload-request.model';
+
+@Component({
+  selector: 'colored-image-upload',
+  templateUrl: './image-upload.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class ImageUploadComponent implements OnInit {
+
+  imagePath$: Observable<string>;
+  formControls$: Observable<ReactiveFormControl[]>;
+
+  constructor(private store$: Store<fromStore.UploadImageState>) {
+  }
+
+  ngOnInit(): void {
+    this.store$.dispatch(fromStore.getFormControlsForSavingImage());
+
+    this.imagePath$ = this.store$.pipe(
+      select(fromStore.getUploadImagePath)
+    );
+
+    this.formControls$ = this.store$.pipe(
+      select(fromStore.selectFormControlsForSavingImage),
+      filter(controls => !!controls && controls.length > 0)
+    );
+  }
+
+  onSaveImage(savingImage: ImageRequest) {
+    this.store$.dispatch(fromStore.saveImageRequest({savingImage}));
+  }
+}

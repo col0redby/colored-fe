@@ -1,0 +1,27 @@
+<ng-container *ngIf="metadata">
+  <div class="image__info-container">
+    <span class="title">Metadata</span>
+    <div class="image__info-item" *ngIf="metadata.exposureTimeDescription">
+      <colored-icon [materialIconName]="'shutter_speed'"></colored-icon>
+      <span>Exposure: {{metadata.exposureTimeDescription}}</span>
+    </div>
+    <div class="image__info-item" *ngIf="metadata.isoDescription">
+      <colored-icon [materialIconName]="'iso'"></colored-icon>
+      <span>ISO: {{metadata.isoDescription}}</span>
+    </div>
+    <div class="image__info-item" *ngIf="metadata.apertureDescription">
+      <colored-icon [materialIconName]="'camera'"></colored-icon>
+      <span>Aperture: {{metadata.apertureDescription}}</span>
+    </div>
+    <div class="image__info-item" *ngIf="metadata.gpsAltitudeDescription">
+      <colored-icon [materialIconName]="'landscape'"></colored-icon>
+      <span>Altitude: {{metadata.gpsAltitudeDescription}}</span>
+    </div>
+    <div class="image__info-item" *ngIf="metadata.gpsLongitude && metadata.gpsLatitude">
+      <colored-maps [height]="'20vh'"
+                    [width]="'100%'"
+      ></colored-maps>
+    </div>
+  </div>
+</ng-container>
+

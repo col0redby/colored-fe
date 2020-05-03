@@ -8,30 +8,37 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "less",
-          "skipTests": true
+          "skipTests": true,
+          "inlineStyle": true
         },
         "@schematics/angular:class": {
-          "skipTests": true
+          "skipTests": true,
+          "inlineStyle": true
         },
         "@schematics/angular:directive": {
-          "skipTests": true
+          "skipTests": true,
+          "inlineStyle": true
         },
         "@schematics/angular:guard": {
-          "skipTests": true
+          "skipTests": true,
+          "inlineStyle": true
         },
         "@schematics/angular:module": {
-          "skipTests": true
+          "skipTests": true,
+          "inlineStyle": true
         },
         "@schematics/angular:pipe": {
-          "skipTests": true
+          "skipTests": true,
+          "inlineStyle": true
         },
         "@schematics/angular:service": {
-          "skipTests": true
+          "skipTests": true,
+          "inlineStyle": true
         }
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "colored",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -47,7 +54,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.less"
+              "src/assets/styles/base.less"
             ],
             "scripts": []
           },
@@ -86,7 +93,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "colored-fe:build"
+            "browserTarget": "colored-fe:build",
+            "proxyConfig": "proxy/dev-proxy.config.js"
           },
           "configurations": {
             "production": {
@@ -112,7 +120,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.less"
+              "src/assets/styles/base.less"
             ],
             "scripts": []
           }

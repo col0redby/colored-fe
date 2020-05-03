@@ -1,0 +1,85 @@
+@gap: 1em;
+
+.comments {
+  display: grid;
+  grid-template-areas: 'header' 'messages';
+  grid-template-rows: auto 1fr;
+  grid-gap: @gap;
+
+  ._wrapper {
+    padding: 0 @gap;
+  }
+
+  &__header {
+    grid-area: header;
+    border: 2px solid @darkgrey;
+    border-radius: @border-radius;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-areas: 'message icon';
+    grid-template-columns: 1fr auto;
+    grid-gap: @gap;
+
+    &-message {
+      grid-area: message;
+      position: relative;
+      width: 100%;
+      display: flex;
+
+      textarea {
+        width: 100%;
+        padding-top: @gap;
+        border: 0;
+        height: 5vh;
+        resize: none;
+        font-size: @gap;
+        outline: none;
+      }
+    }
+
+    &-icon {
+      padding-top: @gap;
+    }
+  }
+
+  &__messages {
+    display: grid;
+    grid-area: messages;
+    grid-gap: @gap;
+    overflow: auto;
+
+    .message {
+      display: grid;
+      grid-gap: @gap / 2;
+      grid-template-areas: 'avatar username' 'avatar comment' 'avatar date';
+      grid-template-columns: auto 1fr;
+
+      &._incoming {
+        grid-template-areas: 'username avatar' 'comment avatar' 'date avatar';
+        grid-template-columns: 1fr auto;
+        text-align: right;
+      }
+
+      &__avatar {
+        grid-area: avatar;
+        font-size: 0.75em;
+      }
+
+      &__username {
+        grid-area: username;
+        font-weight: 700;
+      }
+
+      &__comment {
+        grid-area: comment;
+        text-align: justify;
+        font-size: 0.8em;
+      }
+
+      &__date {
+        grid-area: date;
+        font-size: 0.75em;
+      }
+    }
+  }
+}
