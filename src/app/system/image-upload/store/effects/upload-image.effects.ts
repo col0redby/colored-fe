@@ -34,6 +34,7 @@ export class UploadImageEffects {
         tap(() => {
           this.router.navigateByUrl('upload');
           localStorage.removeItem('uploadingFile');
+          this.store$.dispatch(fromUploadImageStore.uploadImageRequestSuccess({path: null}));
         })
       ),
     {dispatch: false}

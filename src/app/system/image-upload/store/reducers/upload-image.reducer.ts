@@ -22,7 +22,10 @@ const uploadImageReducer = createReducer(
   INIT_STATE,
   on(fromUploadImageActions.uploadImageRequest, (state) => ({
     ...state,
-    imagePath: null
+    formControlsForSavingImages: !!state.formControlsForSavingImages ?
+      state.formControlsForSavingImages.map(formControl => {
+        return {...formControl, value: null};
+      }) : state.formControlsForSavingImages
   })),
   on(fromUploadImageActions.uploadImageRequestSuccess, (state, {path}) => ({
     ...state,

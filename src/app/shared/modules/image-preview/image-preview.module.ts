@@ -12,7 +12,6 @@ import {RouterModule} from '@angular/router';
 import { ImageMainInfoComponent } from './components/image-main-info/image-main-info.component';
 import {EditableFieldModule} from '../editable-field/editable-field.module';
 import {CommentsBlockModule} from '../comments-block/comments-block.module';
-import {MapsModule} from '../maps/maps.module';
 
 @NgModule({
   declarations: [
@@ -29,8 +28,7 @@ import {MapsModule} from '../maps/maps.module';
     AvatarModule,
     RouterModule,
     EditableFieldModule,
-    CommentsBlockModule,
-    MapsModule
+    CommentsBlockModule
   ]
 })
 export class ImagePreviewModule {

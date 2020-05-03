@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 
 import {select, Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
-import {filter} from 'rxjs/operators';
+import {filter, map, tap} from 'rxjs/operators';
 
 import {ReactiveFormControl} from '../../shared/modules/reactive-form/models/reactive-form-controls.model';
 import * as fromStore from './store';
@@ -17,6 +17,7 @@ export class ImageUploadComponent implements OnInit {
 
   imagePath$: Observable<string>;
   formControls$: Observable<ReactiveFormControl[]>;
+  isAvailableImagePath$: Observable<boolean>;
 
   constructor(private store$: Store<fromStore.UploadImageState>) {
   }
@@ -25,7 +26,11 @@ export class ImageUploadComponent implements OnInit {
     this.store$.dispatch(fromStore.getFormControlsForSavingImage());
 
     this.imagePath$ = this.store$.pipe(
-      select(fromStore.getUploadImagePath)
+      select(fromStore.getUploadImagePath),
+    );
+
+    this.isAvailableImagePath$ = this.imagePath$.pipe(
+      map(path => !!path)
     );
 
     this.formControls$ = this.store$.pipe(

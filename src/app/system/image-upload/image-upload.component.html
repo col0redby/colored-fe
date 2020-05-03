@@ -1,6 +1,7 @@
 <colored-view-image [imagePath]="imagePath$ | async"></colored-view-image>
 
 <colored-reactive-form [formControls$]="formControls$"
+                       [disabled]="!(isAvailableImagePath$ | async)"
                        (submitForm)="onSaveImage($event)">
 </colored-reactive-form>
 
