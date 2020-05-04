@@ -1,29 +1,36 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  PRIMARY_OUTLET,
+  Resolve,
+  Router,
+  RouterStateSnapshot,
+  UrlSegment,
+  UrlSegmentGroup,
+  UrlTree
+} from '@angular/router';
 
-import {select, Store} from '@ngrx/store';
-import {Observable} from 'rxjs';
-import {filter, take, tap} from 'rxjs/operators';
+import {Store} from '@ngrx/store';
+import {Observable, of} from 'rxjs';
 
-import {Image} from '../../../shared/models/image.model';
 import * as fromCommonStore from '../../../core/store';
 
 @Injectable({providedIn: 'root'})
-export class ProfileImageResolver implements Resolve<Image> {
+export class ProfileImageResolver implements Resolve<UrlSegment> {
 
   constructor(private store$: Store<fromCommonStore.GeneralCoreState>,
               private router: Router) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Image> | Observable<never> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UrlSegment> | Observable<never> {
     const imageId = parseInt(route.paramMap.get('id'), 10);
 
     this.store$.dispatch(fromCommonStore.getImagesByIdRequest({id: imageId}));
 
-    return this.store$.pipe(
-      select(fromCommonStore.getSelectedImage),
-      filter(image => !!image),
-      take(1)
-    );
+    const pathUrlTree: UrlTree = this.router.parseUrl(state.url);
+    const urlSegmentGroup: UrlSegmentGroup = pathUrlTree.root.children[PRIMARY_OUTLET];
+    const rootSegment = urlSegmentGroup.segments[0];
+
+    return of(rootSegment);
   }
 }

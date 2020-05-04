@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {Action, select, Store} from '@ngrx/store';
 import {of, zip} from 'rxjs';
-import {catchError, concatMap, filter, flatMap, map, switchMap, tap, withLatestFrom} from 'rxjs/operators';
+import {catchError, concatMap, filter, flatMap, map, mergeMap, switchMap, tap, withLatestFrom} from 'rxjs/operators';
 
 import * as fromUploadImageActions from '../actions/upload-image.actions';
 import * as fromUploadImageStore from '../index';
@@ -34,7 +34,7 @@ export class UploadImageEffects {
         tap(() => {
           this.router.navigateByUrl('upload');
           localStorage.removeItem('uploadingFile');
-          this.store$.dispatch(fromUploadImageStore.uploadImageRequestSuccess({path: null}));
+          this.store$.dispatch(fromUploadImageStore.uploadImageRequestSuccess({path: ''}));
         })
       ),
     {dispatch: false}
@@ -98,13 +98,15 @@ export class UploadImageEffects {
   getInfoForSavingImages$ = createEffect(() =>
       this.actions$.pipe(
         ofType(fromUploadImageActions.getInfoForBuildingFormControls),
-        flatMap(
+        concatMap(
           () => zip(
             this.actions$.pipe(filter((action: Action) => action.type === fromUploadImageActions.getGenresRequestSuccess.type)),
             this.actions$.pipe(filter((action: Action) => action.type === fromCore.getAccessLevelsRequestSuccess.type)),
           )
         ),
-        tap(value => this.store$.dispatch(fromUploadImageActions.buildFormControlsForSavingImage()))
+        tap(value => {
+          this.store$.dispatch(fromUploadImageActions.buildFormControlsForSavingImage());
+        })
       ),
     {dispatch: false}
   );
@@ -126,12 +128,16 @@ export class UploadImageEffects {
       this.store$.pipe(
         select(fromUploadImageStore.getGenres),
         filter(genres => genres.length > 0),
-        map(genres => genres.map(genre => {
-            return {
-              id: genre.id,
-              value: genre.title
-            } as ReactiveFormControlOption;
-          })
+        map(genres => {
+            const options = genres.map(genre => {
+              return {
+                id: genre.id,
+                value: genre.title
+              } as ReactiveFormControlOption;
+            });
+            options.push({id: null, value: 'No Genre'});
+            return options;
+          }
         )
       )
     ),
@@ -162,7 +168,7 @@ export class UploadImageEffects {
           .setControlName('accessLevelId')
           .setControlType(ReactiveFormControlType.Boolean)
           .setTitle('Access Level')
-          .setValue(null)
+          .setValue(accessLevels[0].id)
           .setAvailableValues(accessLevels)
           .buildFormControl()
 
@@ -183,7 +189,7 @@ export class UploadImageEffects {
       switchMap(([action, imagePath]: [any, string]) => {
           const requestBody = {...action.savingImage, original: imagePath};
           return this.imageUploadService.saveImage(requestBody).pipe(
-            switchMap(() => [fromUploadImageStore.saveImageRequestSuccess()]),
+            switchMap(() => [fromUploadImageStore.clearStoreAfterSavingImage()]),
             catchError(err => of(fromUploadImageStore.saveImageRequestFailed(err)))
           );
         }
@@ -194,8 +200,11 @@ export class UploadImageEffects {
 
   saveImageSuccess$ = createEffect(() =>
       this.actions$.pipe(
-        ofType(fromUploadImageActions.saveImageRequestSuccess),
-        tap(() => this.router.navigateByUrl('img'))
+        ofType(fromUploadImageActions.clearStoreAfterSavingImage),
+        tap(() => {
+          this.router.navigateByUrl('img');
+          localStorage.removeItem('uploadingFile');
+        })
       ),
     {dispatch: false}
   );

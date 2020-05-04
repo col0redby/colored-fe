@@ -19,7 +19,7 @@ const routes: Routes = [
         path: ':id',
         component: ImagePreviewComponent,
         resolve: {
-          image: ProfileImageResolver
+          rootSegment: ProfileImageResolver
         }
       }
     ]

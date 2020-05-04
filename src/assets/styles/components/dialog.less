@@ -22,8 +22,8 @@
   display: grid;
   grid-template-rows: 30px 1fr;
   padding: 10px;
-  min-width: 200px;
-  min-height: 200px;
+  min-width: 300px;
+  min-height: 300px;
 
   &__header {
     display: flex;
@@ -38,7 +38,28 @@
   }
 }
 
+.dialog__confirm {
+  display: grid;
+  align-items: center;
+  grid-gap: @gap;
+  height: 100%;
+  overflow-wrap: break-word;
+  text-align: center;
+  width: 350px;
 
+  h3 {
+    font-size: 1.5em;
+    font-weight: 200;
+  }
 
+  colored-icon {
+    font-size: 2em;
+  }
+
+  button {
+    width: 70%;
+    justify-self: center;
+  }
+}
 
 

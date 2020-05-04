@@ -1,4 +1,4 @@
-<ng-template [ngIf]="imagePath" [ngIfElse]="loading">
+<ng-template [ngIf]="imagePath && imagePath !== ''" [ngIfElse]="loading">
   <img [ngClass]="styleClass" [alt]="" [src]="imagePath">
 </ng-template>
 

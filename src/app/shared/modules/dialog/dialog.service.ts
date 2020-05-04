@@ -2,7 +2,7 @@ import {ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef,
 
 import {DialogModule} from './dialog.module';
 import {DialogComponent} from './dialog.component';
-import {DialogConfig} from './dialog-config';
+import {DialogConfig} from './configs/dialog-config';
 import {DialogInjector} from './dialog-injector';
 import {DialogRef} from './dialog-ref';
 
@@ -49,7 +49,7 @@ export class DialogService {
     this.dialogComponentRef.destroy();
   }
 
-  open(componentType: Type<any>, dialogConfig?: DialogConfig) {
+  open<T extends DialogConfig>(componentType: Type<any>, dialogConfig?: T) {
     const dialogRef = this.appendDialogToDOM(dialogConfig);
     this.dialogComponentRef.instance.childComponentType = componentType;
 

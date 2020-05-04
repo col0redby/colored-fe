@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router, UrlSegment} from '@angular/router';
 
-import {filter, map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {filter} from 'rxjs/operators';
+import {Observable, Subscription} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 
 import * as fromCommonCore from '../../../core/store';
 import {Image} from '../../models/image.model';
+import {LikeAction} from '../../models/like-action.model';
 
 @Component({
   selector: 'colored-image-preview',
@@ -16,6 +17,7 @@ export class ImagePreviewComponent implements OnInit {
 
   private image$: Observable<Image>;
   private currentImageId: number;
+  private routeSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -24,6 +26,7 @@ export class ImagePreviewComponent implements OnInit {
 
   ngOnInit() {
     this.currentImageId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
+
     this.image$ = this.store$.pipe(
       select(fromCommonCore.getSelectedImage),
       filter(image => !!image)
@@ -37,10 +40,34 @@ export class ImagePreviewComponent implements OnInit {
   }
 
   close() {
-    this.router.navigateByUrl('/');
+    this.routeSubscription = this.route.data.subscribe(data => {
+      const rootRoute = data.rootSegment;
+      if (rootRoute && rootRoute instanceof UrlSegment) {
+        this.router.navigateByUrl(rootRoute.path);
+      }
+    });
+    this.routeSubscription.unsubscribe();
   }
 
   deletePhoto() {
     this.store$.dispatch(fromCommonCore.deleteCurrentImageRequest({id: this.currentImageId}));
+  }
+
+  getMinimalSize(image: Image) {
+    return image.lg || image.original;
+  }
+
+  likePhoto($event) {
+    const like: LikeAction = {userId: 1, imageId: $event};
+    this.store$.dispatch(fromCommonCore.likeImageRequest({like}));
+  }
+
+  unlikePhoto($event) {
+    const like: LikeAction = {userId: 1, imageId: $event};
+    this.store$.dispatch(fromCommonCore.likeImageRequest({like}));
+  }
+
+  sendComment($event: any) {
+    this.store$.dispatch(fromCommonCore.sendCommentRequest({id: this.currentImageId, comment: $event}));
   }
 }

@@ -44,6 +44,12 @@ const uploadImageReducer = createReducer(
     ...state,
     formControlsForSavingImages: formControls
   })),
+  on(fromUploadImageActions.clearStoreAfterSavingImage, (state) => ({
+    ...state,
+    formControlsForSavingImages: null,
+    imagePath: null,
+    uploadingFile: null
+  }))
 );
 
 export function reducer(state: UploadImageState | undefined, action: Action) {

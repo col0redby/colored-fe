@@ -24,9 +24,7 @@ export class ImageUploadService {
   }
 
   public saveImage(request: ImageRequest): Observable<any> {
-    console.log(request);
     request = {...request, userId: 1};
-    console.log(request);
     return this.http.post<any>(AppRoutes.actionWithImages, request);
   }
 }

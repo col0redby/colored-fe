@@ -1,0 +1,6 @@
+<div class="dialog__confirm">
+  <colored-icon [materialIconName]="dialogData.data.icon"></colored-icon>
+  <h3>{{dialogData.data.message}}</h3>
+  <button (click)="confirm()" [ngClass]="dialogData.data.styleButton">{{dialogData.data.confirmButtonName}}</button>
+</div>
+

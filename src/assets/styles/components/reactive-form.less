@@ -1,11 +1,10 @@
 .form {
   display: grid;
-  grid-gap: 10px;
-  width: 30vw;
+  grid-gap: @gap;
 
   &__field {
     display: grid;
-    grid-gap: 5px;
+    grid-gap: @gap / 2;
     width: 100%;
 
     &-errors {
@@ -14,7 +13,7 @@
 
     &-radio {
       display: grid;
-      grid-gap: 5px;
+      grid-gap: @gap / 2;
       grid-auto-flow: column;
 
       &-item {
@@ -22,5 +21,12 @@
         flex-direction: row;
       }
     }
+  }
+
+  &__buttons {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(2, 30%);
+    grid-gap: @gap;
   }
 }

@@ -7,22 +7,28 @@
       <colored-icon [materialIconName]="'message'"></colored-icon>
     </div>
   </div>
-  <div class="comments__messages _wrapper">
-    <div class="message"
-         *ngFor="let message of users$ | async; trackBy: trackByMessage"
-         [ngClass]="{'_incoming': !message.outgoing}">
-      <div class="message__avatar">
-        <colored-avatar></colored-avatar>
+  <div class="comments__messages _wrapper"
+       [ngClass]="{'empty': !messages || messages.length === 0}"
+  >
+    <ng-template [ngIf]="!messages || messages.length === 0" [ngIfElse]="messagesTemplate">
+      <span>No comments</span>
+    </ng-template>
+    <ng-template #messagesTemplate>
+      <div class="message"
+           *ngFor="let message of messages; trackBy: trackByMessage"> <!-- Add style for outgoing message: '_outgoing' -->
+        <div class="message__avatar">
+          <colored-avatar></colored-avatar>
+        </div>
+        <div class="message__username">
+          <span>{{message.user.username}}</span>
+        </div>
+        <div class="message__comment">
+          <span>{{message.text}}</span>
+        </div>
+        <div class="message__date">
+          <span>{{message.createdAt | date: 'MMM dd, yyyy'}}</span>
+        </div>
       </div>
-      <div class="message__username">
-        <span>{{message.username}}</span>
-      </div>
-      <div class="message__comment">
-        <span>{{message.message}}</span>
-      </div>
-      <div class="message__date">
-        <span>{{message.date | date: 'MMM dd, yyyy'}}</span>
-      </div>
-    </div>
+    </ng-template>
   </div>
 </div>

@@ -7,31 +7,29 @@
       ></div>
     </div>
     <div class="image__info-item _title">
-      <colored-editable-field [value]="mainInfo.title"
-                              [type]="'string'"
+      <colored-editable-field [value]="mainInfo.title" [type]="'string'"
                               [styleClass]="'title'"
                               (valueChange)="onEdit('title', $event)"
       ></colored-editable-field>
       <div class="user-actions">
         <div class="flow-column">
-          <colored-icon [materialIconName]="'favorite'"></colored-icon>
+          <colored-icon [materialIconName]="'favorite'" (clickAction)="onLikePhoto(mainInfo.id)"></colored-icon>
           <span>{{mainInfo.likes.count}}</span>
         </div>
         <div class="flow-column">
-          <colored-icon [materialIconName]="'remove_red_eye'"></colored-icon>
-          <span>{{mainInfo.comments.count}}</span>
+          <colored-icon [materialIconName]="'remove_red_eye'" (clickAction)="onUnlikePhoto(mainInfo.id)"></colored-icon>
+          <span>{{mainInfo.views}}</span>
         </div>
       </div>
     </div>
     <div class="image__info-item _title">
-      <colored-editable-field [value]="mainInfo.description" [type]="'text'" (valueChange)="onEdit('description', $event)"></colored-editable-field>
-    </div>
-    <div class="image__info-item _title">
-      <button (click)="onDeletePhoto()">Delete photo</button>
+      <colored-editable-field [value]="mainInfo.description" [type]="'text'"
+                              (valueChange)="onEdit('description', $event)"
+      ></colored-editable-field>
     </div>
 
     <div class="image__info-item _title">
-      <colored-comments-block></colored-comments-block>
+      <colored-comments-block [messages]="mainInfo.comments.list" (sendComment)="onSendComment($event)"></colored-comments-block>
     </div>
   </div>
 </ng-container>

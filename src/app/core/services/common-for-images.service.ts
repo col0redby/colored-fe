@@ -5,8 +5,11 @@ import {Observable} from 'rxjs';
 
 import {AccessLevel} from '../../shared/models/access-level.model';
 import {AppRoutes} from '../../app-routes.enum';
-import {Image} from '../../shared/models/image.model';
+import {Image, UserActions} from '../../shared/models/image.model';
 import {FieldEntryModel} from '../../shared/modules/image-preview/models/entry.model';
+import {LikeAction} from '../../shared/models/like-action.model';
+import {Comment, Like} from '../../shared/models/user-actions.model';
+import {HttpPathBuilder} from '../builders/http-path.builder';
 
 @Injectable({providedIn: 'root'})
 export class CommonForImagesService {
@@ -30,5 +33,21 @@ export class CommonForImagesService {
 
   deleteImage(id: number) {
     return this.http.delete(`${AppRoutes.actionWithImages}/${id}`);
+  }
+
+  likePhoto(requestBody: LikeAction): Observable<UserActions<Like>> {
+    return this.http.post<UserActions<Like>>(AppRoutes.likePhoto, requestBody);
+  }
+
+  unlikePhoto(requestBody: LikeAction): Observable<UserActions<Like>> {
+    return this.http.post<UserActions<Like>>(AppRoutes.unlikePhoto, requestBody, {
+
+    });
+  }
+
+  sendComment(imageId: number, requestBody: Comment): Observable<UserActions<Comment>> {
+    const pathVariables = new Map().set('id', imageId);
+    return this.http.post<UserActions<Comment>>(
+      HttpPathBuilder.buildUrlWithPathVariables(AppRoutes.sendComment, pathVariables), requestBody);
   }
 }

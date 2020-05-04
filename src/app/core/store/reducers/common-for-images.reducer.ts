@@ -35,6 +35,21 @@ const commonForImagesReducer = createReducer(
       ...state,
       selectedImage: null
     })
+  ),
+  on(fromCommonForImagesActions.likeImageRequestSuccess, (state, {likes}) => ({
+      ...state,
+      selectedImage: {...state.selectedImage, likes}
+    })
+  ),
+  on(fromCommonForImagesActions.unlikeImageRequestSuccess, (state, {likes}) => ({
+      ...state,
+      selectedImage: {...state.selectedImage, likes}
+    })
+  ),
+  on(fromCommonForImagesActions.sendCommentRequestSuccess, (state, {comments}) => ({
+      ...state,
+      selectedImage: {...state.selectedImage, comments}
+    })
   )
 );
 

@@ -91,10 +91,49 @@ export class CommonForImagesEffects {
   );
 
   deleteImageSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(fromCommonForImages.deleteCurrentImageRequestSuccess),
-      tap(() => this.router.navigateByUrl('/'))
-    ),
+      this.actions$.pipe(
+        ofType(fromCommonForImages.deleteCurrentImageRequestSuccess),
+        tap(() => this.router.navigateByUrl('/'))
+      ),
     {dispatch: false}
+  );
+
+  likeImage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromCommonForImages.likeImageRequest),
+      switchMap(action => this.commonForImagesService.likePhoto(action.like).pipe(
+        switchMap((updatingLikes) => [
+          fromCommonForImages.likeImageRequestSuccess({likes: updatingLikes})
+        ]),
+        catchError(err => of(fromCommonForImages.likeImageRequestFailed(err)))
+      )),
+      catchError(err => of(fromCommonForImages.likeImageRequestFailed(err)))
+    )
+  );
+
+  unlikeImage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromCommonForImages.unlikeImageRequest),
+      switchMap(action => this.commonForImagesService.unlikePhoto(action.unlike).pipe(
+        switchMap((updatingLikes) => [
+          fromCommonForImages.unlikeImageRequestSuccess({likes: updatingLikes})
+        ]),
+        catchError(err => of(fromCommonForImages.unlikeImageRequestFailed(err)))
+      )),
+      catchError(err => of(fromCommonForImages.unlikeImageRequestFailed(err)))
+    )
+  );
+
+  sendComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromCommonForImages.sendCommentRequest),
+      switchMap(action => this.commonForImagesService.sendComment(action.id, action.comment).pipe(
+        switchMap((comments) => [
+          fromCommonForImages.sendCommentRequestSuccess({comments})
+        ]),
+        catchError(err => of(fromCommonForImages.sendCommentRequestFailed(err)))
+      )),
+      catchError(err => of(fromCommonForImages.sendCommentRequestFailed(err)))
+    )
   );
 }

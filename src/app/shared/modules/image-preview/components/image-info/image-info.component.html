@@ -1,11 +1,19 @@
 <ng-container *ngIf="(imageInfo$ | async) as imageInfo">
   <div class="image__info">
-    <colored-image-metadata class="image__info-metadata" [metadata]="imageInfo.metadata"></colored-image-metadata>
-    <colored-image-main-info class="image__info-main" [mainInfo]="imageInfo"
+    <colored-image-metadata class="image__info-metadata"
+                            [metadata]="imageInfo.metadata"
+    ></colored-image-metadata>
+    <colored-image-main-info class="image__info-main"
+                             [mainInfo]="imageInfo"
                              (editMainInfo)="editCurrentImage($event)"
-                             (deletePhoto)="onDeletePhoto()"
+                             (likePhoto)="onLikePhoto($event)"
+                             (unlikePhoto)="onUnlikePhoto($event)"
+                             (sendComment)="onSendComment($event)"
     ></colored-image-main-info>
-    <colored-image-additional-info class="image__info-additional" [additionalInfo]="imageInfo"></colored-image-additional-info>
+    <colored-image-additional-info class="image__info-additional"
+                                   [additionalInfo]="imageInfo"
+                                   (deletePhoto)="onDeletePhoto()"
+    ></colored-image-additional-info>
   </div>
 </ng-container>
 

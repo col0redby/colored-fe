@@ -1,7 +1,18 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, TrackByFunction, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef, EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TrackByFunction,
+  ViewChild
+} from '@angular/core';
 
 import {Observable, of} from 'rxjs';
 import {Comment} from '../../models/user-actions.model';
+import {CommentAction} from '../../models/like-action.model';
 
 @Component({
   selector: 'colored-comments-block',
@@ -14,6 +25,7 @@ export class CommentsBlockComponent implements OnInit, AfterViewInit {
   private inputMessage: ElementRef;
 
   @Input() messages: Comment[];
+  @Output() sendComment = new EventEmitter();
 
   users = [
     {
@@ -56,14 +68,12 @@ export class CommentsBlockComponent implements OnInit, AfterViewInit {
     }
     if ($event.key === 'Enter') {
       this.inputMessage.nativeElement.blur();
-      const newMessage = {
-        username: 'Nick Nick',
-        message: this.inputMessage.nativeElement.value,
-        date: '2020-05-30',
-        outgoing: true
+      const comment: CommentAction = {
+        userId: 1,
+        text: this.inputMessage.nativeElement.value
       };
       this.inputMessage.nativeElement.value = '';
-      this.users.push(newMessage);
+      this.sendComment.emit(comment);
       return;
     }
   }

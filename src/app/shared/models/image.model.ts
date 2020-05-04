@@ -11,14 +11,8 @@ export interface Image extends BaseModel {
   genre: Genre;
   tags: Tag[];
   views: number;
-  likes: {
-    count: number;
-    list: Like[]
-  };
-  comments: {
-    count: number;
-    list: Comment[]
-  };
+  likes: UserActions<Like>;
+  comments: UserActions<Comment>;
   colors: Color[];
   metadata: Metadata;
   accessLevel: accessLevelTypes;
@@ -39,17 +33,22 @@ export interface Tag extends BaseModel {
 
 export interface Metadata {
   exposureTimeDescription: string;
-  exposureTimeInverse: number;
+  exposureTimeInverse?: number;
   isoDescription: string;
-  iso: number;
+  iso?: number;
   apertureDescription: string;
-  aperture: number;
+  aperture?: number;
   gpsLatitudeDescription: string;
-  gpsLatitude: number;
+  gpsLatitude?: number;
   gpsLongitudeDescription: string;
-  gpsLongitude: number;
+  gpsLongitude?: number;
   gpsAltitudeDescription: string;
-  gpsAltitudeMeters: number;
+  gpsAltitudeMeters?: number;
 }
 
 export type accessLevelTypes = 'public' | 'private';
+
+export interface UserActions<T> {
+  count: number;
+  list: T[];
+}

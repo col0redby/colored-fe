@@ -1,8 +1,12 @@
-<colored-view-image [imagePath]="imagePath$ | async"></colored-view-image>
+<div class="image__upload">
+  <colored-view-image class="image__upload-workarea" [imagePath]="imagePath$ | async"></colored-view-image>
 
-<colored-reactive-form [formControls$]="formControls$"
-                       [disabled]="!(isAvailableImagePath$ | async)"
-                       (submitForm)="onSaveImage($event)">
-</colored-reactive-form>
+  <colored-reactive-form class="image__upload-form"
+                         [formControls$]="formControls$"
+                         [disabled]="!(isAvailableImagePath$ | async)"
+                         (submitForm)="onSaveImage($event)"
+                         (cancelButton)="onLeaveWithoutSaving()"
+  ></colored-reactive-form>
+</div>
 
 

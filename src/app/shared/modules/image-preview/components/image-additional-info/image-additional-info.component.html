@@ -18,7 +18,7 @@
       </ng-template>
     </div>
 
-    <div class="image__info-item">
+    <div class="image__info-item" *ngIf="additionalInfo.genre">
       <span>Genre: </span>
       <a [routerLink]="'../upload'">{{additionalInfo.genre.title}}</a>
     </div>
@@ -34,6 +34,9 @@
           <span class="image__tag" *ngFor="let tag of additionalInfo.tags">{{tag.title}}</span>
         </div>
       </ng-template>
+    </div>
+    <div class="image__info-item _title">
+      <button (click)="onDeletePhoto()">Delete photo</button>
     </div>
   </div>
 </ng-container>

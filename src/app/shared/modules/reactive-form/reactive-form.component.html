@@ -77,5 +77,8 @@
     </ng-container>
   </ng-template>
 
-  <button type="submit" [disabled]="formGroup.invalid || disabled">Submit</button>
+  <div class="form__buttons">
+    <button class="_cancel" (click)="closeForm()">Cancel</button>
+    <button type="submit" [disabled]="formGroup.invalid || disabled">Submit</button>
+  </div>
 </form>

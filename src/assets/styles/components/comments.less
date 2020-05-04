@@ -1,5 +1,3 @@
-@gap: 1em;
-
 .comments {
   display: grid;
   grid-template-areas: 'header' 'messages';
@@ -8,6 +6,10 @@
 
   ._wrapper {
     padding: 0 @gap;
+  }
+
+  .empty {
+    justify-content: center;
   }
 
   &__header {
@@ -54,7 +56,7 @@
       grid-template-areas: 'avatar username' 'avatar comment' 'avatar date';
       grid-template-columns: auto 1fr;
 
-      &._incoming {
+      &._outgoing {
         grid-template-areas: 'username avatar' 'comment avatar' 'date avatar';
         grid-template-columns: 1fr auto;
         text-align: right;

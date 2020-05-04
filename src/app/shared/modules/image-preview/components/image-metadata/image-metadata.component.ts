@@ -10,10 +10,21 @@ export class ImageMetadataComponent implements OnInit {
 
   @Input() metadata: Metadata;
 
+  isAvailableMetadata: string | null;
+
   constructor() {
   }
 
   ngOnInit() {
+    this.isAvailableMetadata = this.metadata ? this.haveMetadata() : null;
   }
 
+  haveMetadata() {
+    return this.metadata.gpsAltitudeDescription ||
+      this.metadata.apertureDescription ||
+      this.metadata.exposureTimeDescription ||
+      this.metadata.gpsLatitudeDescription ||
+      this.metadata.gpsLongitudeDescription ||
+      this.metadata.isoDescription;
+  }
 }

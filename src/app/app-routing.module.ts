@@ -11,9 +11,6 @@ const routes: Routes = [
     path: 'img', loadChildren: () => import('./system/profile/profile.module').then(value => value.ProfileModule)
   },
   {
-    path: 'com', component: CommentsBlockComponent
-  },
-  {
     path: '', redirectTo: 'img', pathMatch: 'full'
   }
 ];

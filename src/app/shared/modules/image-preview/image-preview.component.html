@@ -6,10 +6,16 @@
         <colored-icon [materialIconName]="'fullscreen'"
                       [styleClass]="'image__icon-full-screen'">
         </colored-icon>
-        <colored-view-image class="image__view" [imagePath]="image.original"></colored-view-image>
+        <colored-view-image class="image__view" [imagePath]="getMinimalSize(image)"></colored-view-image>
       </div>
     </div>
-    <colored-image-info [imageInfo$]="image$" (editImageInfo)="editImage($event)" (deletePhoto)="deletePhoto()"></colored-image-info>
+    <colored-image-info [imageInfo$]="image$"
+                        (editImageInfo)="editImage($event)"
+                        (deletePhoto)="deletePhoto()"
+                        (likePhoto)="likePhoto($event)"
+                        (unlikePhoto)="unlikePhoto($event)"
+                        (sendComment)="sendComment($event)"
+    ></colored-image-info>
   </div>
 </ng-container>
 

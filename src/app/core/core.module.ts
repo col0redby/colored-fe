@@ -5,7 +5,7 @@ import {EffectsModule} from '@ngrx/effects';
 
 import * as fromGeneralCore from './store';
 import {effects} from './store/effects';
-import {HeaderModule} from './header/header.module';
+import {HeaderModule} from './modules/header/header.module';
 
 @NgModule({
   imports: [

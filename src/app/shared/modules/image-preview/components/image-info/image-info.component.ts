@@ -14,6 +14,9 @@ export class ImageInfoComponent implements OnInit {
 
   @Output() editImageInfo = new EventEmitter();
   @Output() deletePhoto = new EventEmitter();
+  @Output() likePhoto = new EventEmitter();
+  @Output() unlikePhoto = new EventEmitter();
+  @Output() sendComment = new EventEmitter();
 
   constructor() {
   }
@@ -28,5 +31,17 @@ export class ImageInfoComponent implements OnInit {
 
   onDeletePhoto() {
     this.deletePhoto.emit();
+  }
+
+  onLikePhoto($event: any) {
+    this.likePhoto.emit($event);
+  }
+
+  onUnlikePhoto($event: any) {
+    this.unlikePhoto.emit($event);
+  }
+
+  onSendComment($event: any) {
+    this.sendComment.emit($event);
   }
 }

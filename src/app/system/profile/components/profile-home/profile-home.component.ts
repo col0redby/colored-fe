@@ -39,4 +39,8 @@ export class ProfileHomeComponent implements OnInit {
   getLink(id: any) {
     return this.currentUrl + '/' + id;
   }
+
+  getMinimalSize(image: Image) {
+    return image.md || image.original;
+  }
 }

@@ -28,10 +28,6 @@ export const saveImageRequest = createAction(
   props<{ savingImage: ImageRequest }>()
 );
 
-export const saveImageRequestSuccess = createAction(
-  'Save Image Request Success'
-);
-
 export const saveImageRequestFailed = createAction(
   'Save Image Request Failed',
   props<{ file: File }>()
@@ -73,4 +69,7 @@ export const buildFormControlsForSavingImageFailed = createAction(
   props<{ error: Error }>()
 );
 
+export const clearStoreAfterSavingImage = createAction(
+  'Clear Store After For Saving Image'
+);
 

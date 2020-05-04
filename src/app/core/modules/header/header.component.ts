@@ -3,9 +3,9 @@ import {Component, OnDestroy} from '@angular/core';
 import {filter, tap} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 
-import {DialogService} from '../../shared/modules/dialog/dialog.service';
-import {UploadImageModalComponent} from '../../system/image-upload/components/upload-image-modal/upload-image-modal.component';
-import * as fromStore from '../../system/image-upload/store';
+import {DialogService} from '../../../shared/modules/dialog/dialog.service';
+import {UploadImageModalComponent} from '../../../system/image-upload/components/upload-image-modal/upload-image-modal.component';
+import * as fromStore from '../../../system/image-upload/store';
 import {Store} from '@ngrx/store';
 
 @Component({
