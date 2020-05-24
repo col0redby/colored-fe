@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 import {Observable} from 'rxjs';
 import {select, Store} from '@ngrx/store';
@@ -15,7 +16,8 @@ export class RegistrationComponent implements OnInit {
 
   private registrationFormControls$: Observable<ReactiveFormControl[]>;
 
-  constructor(private store$: Store<fromStore.AuthState>) {
+  constructor(private store$: Store<fromStore.AuthState>,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -27,4 +29,7 @@ export class RegistrationComponent implements OnInit {
     );
   }
 
+  routeToLogin() {
+    this.router.navigateByUrl('../login');
+  }
 }
