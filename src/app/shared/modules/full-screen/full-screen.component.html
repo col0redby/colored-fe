@@ -1,0 +1,10 @@
+<div class="overlay full-screen">
+  <div class="full-screen__wrapper">
+    <div class="full-screen__empty"></div>
+    <colored-view-image class="full-screen__image" [imagePath]="imagePath"></colored-view-image>
+    <colored-icon [materialIconName]="'fullscreen_exit'"
+                  [styleClass]="'full-screen__close'"
+                  (clickAction)="closeFullScreenMode()"
+    ></colored-icon>
+  </div>
+</div>

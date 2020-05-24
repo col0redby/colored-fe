@@ -1,13 +1,23 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {
+  ApplicationRef,
+  Component,
+  ComponentFactoryResolver,
+  EmbeddedViewRef,
+  Injector,
+  OnInit,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import {ActivatedRoute, Router, UrlSegment} from '@angular/router';
 
 import {filter} from 'rxjs/operators';
-import {Observable, Subscription} from 'rxjs';
+import {interval, Observable, Subscription} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 
 import * as fromCommonCore from '../../../core/store';
 import {Image} from '../../models/image.model';
 import {LikeAction} from '../../models/like-action.model';
+import {FullScreenComponent} from '../full-screen/full-screen.component';
 
 @Component({
   selector: 'colored-image-preview',
@@ -19,9 +29,15 @@ export class ImagePreviewComponent implements OnInit {
   private currentImageId: number;
   private routeSubscription: Subscription;
 
+  @ViewChild('fullScreenTemplate', {static: false})
+  private fullScreenCTemplate: TemplateRef<any>;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private store$: Store<fromCommonCore.GeneralCoreState>) {
+              private store$: Store<fromCommonCore.GeneralCoreState>,
+              private componentFactoryResolver: ComponentFactoryResolver,
+              private applicationRef: ApplicationRef,
+              private injector: Injector) {
   }
 
   ngOnInit() {
@@ -69,5 +85,21 @@ export class ImagePreviewComponent implements OnInit {
 
   sendComment($event: any) {
     this.store$.dispatch(fromCommonCore.sendCommentRequest({id: this.currentImageId, comment: $event}));
+  }
+
+  openFullScreenPhoto(image: Image) {
+    const componentRef = this.componentFactoryResolver
+      .resolveComponentFactory(FullScreenComponent)
+      .create(this.injector);
+
+    componentRef.instance.imagePath = image.original;
+    componentRef.instance.exitFullScreenMode.subscribe(() => {
+      this.applicationRef.detachView(componentRef.hostView);
+      componentRef.destroy();
+    });
+
+    this.applicationRef.attachView(componentRef.hostView);
+    const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+    document.body.appendChild(domElem);
   }
 }

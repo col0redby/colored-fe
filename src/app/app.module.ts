@@ -16,6 +16,7 @@ import {CoreModule} from './core/core.module';
 import {ProfileModule} from './system/profile/profile.module';
 import {IconModule} from './shared/modules/icon/icon.module';
 import {CommentsBlockModule} from './shared/modules/comments-block/comments-block.module';
+import {AuthModule} from './system/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {CommentsBlockModule} from './shared/modules/comments-block/comments-bloc
     DialogModule,
     ImageUploadModule,
     ProfileModule,
+    AuthModule,
     CommentsBlockModule,
 
     StoreModule.forRoot({}),

@@ -2,22 +2,44 @@
   <div class="image__preview">
     <div class="image__container">
       <div class="image__wrapper">
-        <colored-icon [materialIconName]="'clear'" [styleClass]="'image__close'" (clickAction)="close()"></colored-icon>
+        <colored-icon [materialIconName]="'clear'"
+                      [styleClass]="'image__close'"
+                      (clickAction)="close()"
+        ></colored-icon>
         <colored-icon [materialIconName]="'fullscreen'"
-                      [styleClass]="'image__icon-full-screen'">
-        </colored-icon>
-        <colored-view-image class="image__view" [imagePath]="getMinimalSize(image)"></colored-view-image>
+                      [styleClass]="'image__icon-full-screen'"
+                      (clickAction)="openFullScreenPhoto(image)"
+        ></colored-icon>
+        <colored-view-image class="image__view"
+                            [imagePath]="getMinimalSize(image)"
+                            (click)="openFullScreenPhoto(image)"
+        ></colored-view-image>
       </div>
     </div>
-    <colored-image-info [imageInfo$]="image$"
-                        (editImageInfo)="editImage($event)"
-                        (deletePhoto)="deletePhoto()"
-                        (likePhoto)="likePhoto($event)"
-                        (unlikePhoto)="unlikePhoto($event)"
-                        (sendComment)="sendComment($event)"
-    ></colored-image-info>
+    <div class="image__info">
+      <colored-image-metadata class="image__info-metadata"
+                              [metadata]="image.metadata"
+      ></colored-image-metadata>
+      <colored-image-main-info class="image__info-main-info"
+                               [mainInfo]="image"
+                               (editMainInfo)="editImage($event)"
+                               (likePhoto)="likePhoto($event)"
+                               (unlikePhoto)="unlikePhoto($event)"
+      ></colored-image-main-info>
+      <colored-comments-block class="image__info-comments"
+                              [messages]="image.comments.list"
+                              (sendComment)="sendComment($event)"
+      ></colored-comments-block>
+      <colored-image-additional-info class="image__info-additional-info"
+                                     [additionalInfo]="image"
+                                     (deletePhoto)="deletePhoto()"
+      ></colored-image-additional-info>
+      <div class="image__maps">
+      </div>
+    </div>
   </div>
 </ng-container>
 
 
+<ng-template #fullScreenTemplate></ng-template>
 

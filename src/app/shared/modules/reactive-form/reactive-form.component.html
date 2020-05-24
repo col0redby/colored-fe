@@ -1,68 +1,28 @@
 <form class="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()" *ngIf="(formControls$ | async) as formControls">
   <ng-template ngFor let-control [ngForOf]="formControls" [ngForTrackBy]="trackByControl">
 
-    <ng-container [ngSwitch]="control.type">
+    <ng-container [ngSwitch]="true">
       <div class="form__field">
         <label [for]="control.controlName">{{control.title}}</label>
 
-        <ng-template [ngSwitchCase]="'text'">
+        <ng-template [ngSwitchCase]="control.type === 'text' || control.type === 'number' || control.type === 'email' || control.type === 'password'">
           <input [formControlName]="control.controlName"
                  [type]="control.type"
                  [value]="control.value"
                  [maxLength]="control.validators?.get('maxLength') || 255"
                  [minLength]="control.validators?.get('minLength')"
-          />
-          <ng-container *ngIf="formGroup.get(control.controlName).invalid">
-            <div class="form__field-errors" *ngIf="formGroup.get(control.controlName).dirty || formGroup.get(control.controlName).touched">
-              <p *ngIf="formGroup.get(control.controlName).errors?.required">
-                {{control.title}} is required
-              </p>
-              <p *ngIf="formGroup.get(control.controlName).errors?.minlength">
-                Minimum length of {{control.title | lowercase}} is {{control.validators?.get('minLength')}}
-              </p>
-              <p *ngIf="formGroup.get(control.controlName).errors?.maxlength">
-                Maximum length of {{control.title | lowercase}} is {{control.validators?.get('maxLength')}}
-              </p>
-              <p *ngIf="formGroup.get(control.controlName).errors?.pattern">
-                {{control.title}} is incorrect
-              </p>
-            </div>
-          </ng-container>
-
-        </ng-template>
-
-        <ng-template [ngSwitchCase]="'number'">
-          <input [formControlName]="control.controlName"
-                 [type]="control.type"
-                 [value]="control.value"
                  [max]="control.validators?.get('max')"
                  [min]="control.validators?.get('min')"
-          />
-          <ng-container *ngIf="formGroup.get(control.controlName).invalid">
-            <div class="form__field-errors" *ngIf="formGroup.get(control.controlName).dirty || formGroup.get(control.controlName).touched">
-              <p *ngIf="formGroup.get(control.controlName).errors?.required">
-                {{control.title}} is required
-              </p>
-              <p *ngIf="formGroup.get(control.controlName).errors?.min">
-                Minimum value of {{control.title | lowercase}} is {{control.validators?.get('min')}}
-              </p>
-              <p *ngIf="formGroup.get(control.controlName).errors?.max">
-                Maximum value of {{control.title | lowercase}} is {{control.validators?.get('max')}}
-              </p>
-              <p *ngIf="formGroup.get(control.controlName).errors?.pattern">
-                {{control.title}} is incorrect
-              </p>
-            </div>
-          </ng-container>
+                 [pattern]="control.validators?.get('pattern')"/>
         </ng-template>
 
-        <ng-template [ngSwitchCase]="'options'">
+        <ng-template [ngSwitchCase]="control.type === 'options'">
           <select [formControlName]="control.controlName">
             <option *ngFor="let option of control.availableValues" [ngValue]="option.id">{{option.value}}</option>
           </select>
         </ng-template>
 
-        <ng-template [ngSwitchCase]="'boolean'">
+        <ng-template [ngSwitchCase]="control.type === 'boolean'">
           <div class="form__field-radio">
             <ng-container *ngFor="let option of control.availableValues; let i = index">
               <div class="form__field-radio-item">
@@ -73,12 +33,37 @@
             </ng-container>
           </div>
         </ng-template>
+
+        <ng-container *ngIf="formGroup.get(control.controlName).invalid">
+          <div class="form__field-errors"
+               *ngIf="formGroup.get(control.controlName).dirty || formGroup.get(control.controlName).touched">
+            <p *ngIf="formGroup.get(control.controlName).errors?.required">
+              {{control.title}} is required
+            </p>
+            <p *ngIf="formGroup.get(control.controlName).errors?.minlength">
+              Minimum length of {{control.title | lowercase}} is {{control.validators?.get('minLength')}}
+            </p>
+            <p *ngIf="formGroup.get(control.controlName).errors?.maxlength">
+              Maximum length of {{control.title | lowercase}} is {{control.validators?.get('maxLength')}}
+            </p>
+            <p *ngIf="formGroup.get(control.controlName).errors?.pattern">
+              {{control.title}} is incorrect
+            </p>
+            <p *ngIf="formGroup.get(control.controlName).errors?.min">
+              Minimum value of {{control.title | lowercase}} is {{control.validators?.get('min')}}
+            </p>
+            <p *ngIf="formGroup.get(control.controlName).errors?.max">
+              Maximum value of {{control.title | lowercase}} is {{control.validators?.get('max')}}
+            </p>
+          </div>
+        </ng-container>
       </div>
     </ng-container>
   </ng-template>
 
   <div class="form__buttons">
-    <button class="_cancel" (click)="closeForm()">Cancel</button>
+    <button class="_cancel" (click)="closeForm()"
+            [hidden]="hiddenCancelButton">Cancel</button>
     <button type="submit" [disabled]="formGroup.invalid || disabled">Submit</button>
   </div>
 </form>

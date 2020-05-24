@@ -11,7 +11,9 @@ export enum ReactiveFormControlType {
   String = 'text',
   Number = 'number',
   Boolean = 'boolean',
-  Options = 'options'
+  Options = 'options',
+  Password = 'password',
+  Email = 'email'
 }
 
 export enum ReactiveFormControlValidatorType {

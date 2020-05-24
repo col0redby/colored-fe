@@ -16,6 +16,7 @@ import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-d
 export class ReactiveFormComponent implements OnInit {
 
   @Input() formControls$: Observable<ReactiveFormControl[]>;
+  @Input() hiddenCancelButton = false;
   @Input() disabled: any;
 
   @Output() submitForm = new EventEmitter();

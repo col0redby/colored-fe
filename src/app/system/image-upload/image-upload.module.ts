@@ -10,7 +10,6 @@ import {DragAndDropModule} from '../../shared/modules/drag-and-drop/drag-and-dro
 import * as fromUploadImage from './store';
 import {UploadImageModalComponent} from './components/upload-image-modal/upload-image-modal.component';
 import {uploadImageEffects} from './store/effects';
-import {LoadSpinnerModule} from '../../shared/modules/load-spinner/load-spinner.module';
 import {ReactiveFormModule} from '../../shared/modules/reactive-form/reactive-form.module';
 import {ViewImageModule} from '../../shared/modules/view-image/view-image.module';
 
@@ -26,12 +25,11 @@ import {ViewImageModule} from '../../shared/modules/view-image/view-image.module
     CommonModule,
     DragAndDropModule,
     ImageUploadRoutingModule,
-    LoadSpinnerModule,
     ReactiveFormModule,
+    ViewImageModule,
 
     StoreModule.forFeature(fromUploadImage.uploadImageKey, fromUploadImage.reducer),
-    EffectsModule.forFeature(uploadImageEffects),
-    ViewImageModule
+    EffectsModule.forFeature(uploadImageEffects)
   ]
 })
 export class ImageUploadModule {

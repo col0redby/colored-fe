@@ -11,6 +11,9 @@ const routes: Routes = [
     path: 'img', loadChildren: () => import('./system/profile/profile.module').then(value => value.ProfileModule)
   },
   {
+    path: 'account', loadChildren: () => import('./system/auth/auth.module').then(value => value.AuthModule)
+  },
+  {
     path: '', redirectTo: 'img', pathMatch: 'full'
   }
 ];

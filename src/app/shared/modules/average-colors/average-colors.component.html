@@ -1,0 +1,4 @@
+<div class="avg-colors" *ngIf="colors.length > 0">
+  <div *ngFor="let color of colors" [ngStyle]="{backgroundColor: color.color, width: color.pct + '%'}"
+  ></div>
+</div>

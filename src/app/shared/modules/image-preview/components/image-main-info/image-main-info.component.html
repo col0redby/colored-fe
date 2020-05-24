@@ -1,11 +1,6 @@
 <ng-container *ngIf="mainInfo">
   <div class="image__info-container">
-    <div class="image__info-item _flex" *ngIf="mainInfo.colors.length > 0">
-      <div *ngFor="let color of mainInfo.colors"
-           class="color"
-           [ngStyle]="{backgroundColor: color.color, width: color.pct + '%'}"
-      ></div>
-    </div>
+    <colored-average-colors [colors]="mainInfo.colors"></colored-average-colors>
     <div class="image__info-item _title">
       <colored-editable-field [value]="mainInfo.title" [type]="'string'"
                               [styleClass]="'title'"
@@ -26,10 +21,6 @@
       <colored-editable-field [value]="mainInfo.description" [type]="'text'"
                               (valueChange)="onEdit('description', $event)"
       ></colored-editable-field>
-    </div>
-
-    <div class="image__info-item _title">
-      <colored-comments-block [messages]="mainInfo.comments.list" (sendComment)="onSendComment($event)"></colored-comments-block>
     </div>
   </div>
 </ng-container>
